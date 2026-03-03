@@ -1,0 +1,225 @@
+# 🎯 Project Overview
+
+A **Tech Event Management Platform** where:
+
+* Users can browse tech events
+* View event details
+* Register & login
+* Book events
+* View their bookings
+* Admins can create / edit / delete events
+
+Think of it like a mini Eventbrite, but focused on tech meetups.
+
+---
+
+# 👤 Roles
+
+## 1️⃣ User
+
+* Register
+* Login
+* Browse events
+* Book event
+* Cancel booking
+* View “My Bookings”
+
+## 2️⃣ Admin
+
+* Everything user can do
+* Create event
+* Edit event
+* Delete event
+* View all bookings
+* Manage event capacity
+
+Keep roles simple: `"USER"` and `"ADMIN"`
+
+---
+
+# 🔐 Authentication Requirements
+
+Yes, auth is required.
+
+### Auth System Should:
+
+* Use JWT (stored in HTTP-only cookies)
+* Support Register & Login
+* Password hashing (bcrypt)
+* Middleware route protection
+* Role-based access control
+* Logout (clear cookie)
+
+### Protected Routes:
+
+* Create Event → Admin only
+* Book Event → Logged-in user
+* My Bookings → Logged-in user
+* Admin dashboard → Admin only
+
+---
+
+# 📅 Event Model Requirements
+
+Each Event should have:
+
+* title
+* description
+* date
+* time
+* location
+* category (AI, Web, Cloud, DevOps, etc.)
+* speaker name
+* max capacity
+* current booked count
+* price (optional)
+* createdBy (admin id)
+* timestamps
+
+Add proper indexing on:
+
+* date
+* category
+
+---
+
+# 🎟 Booking Model Requirements
+
+Each Booking should:
+
+* reference user
+* reference event
+* booking status (CONFIRMED / CANCELLED)
+* timestamps
+
+Constraints:
+
+* A user cannot book same event twice
+* Booking blocked if event is full
+
+---
+
+# 📄 Pages Required
+
+## Public
+
+* Home
+* Browse Events
+* Event Details
+
+## Auth
+
+* Register
+* Login
+
+## User (Protected)
+
+* My Bookings
+
+## Admin (Protected)
+
+* Create Event
+* Edit Event
+* Admin Dashboard
+
+---
+
+# 🔎 Event Browsing Features
+
+Add real-world usability:
+
+* Pagination
+* Filter by category
+* Filter by date
+* Search by title
+* Sort by upcoming
+
+Keep it clean, not overloaded.
+
+---
+
+# ⚡ Performance Requirements
+
+* Event listing → Server Component
+* Use caching for public events
+* Revalidate after event creation
+* Use optimized images
+* Lazy load components where needed
+
+---
+
+# 🛡 Security Requirements
+
+* Input validation using Zod
+* Password hashing
+* HTTP-only cookies
+* Prevent overposting
+* Check capacity before booking
+* Prevent double booking
+* Rate limit auth routes
+
+---
+
+# 🧪 Testing Requirements
+
+Minimum:
+
+* Unit test validation logic
+* Test booking logic (capacity check)
+* E2E:
+
+* Register
+* Login
+* Book event
+* Admin creates event
+
+---
+
+# 📊 Optional Advanced Features (If You Want To Level Up)
+
+* Event waitlist
+* QR-based check-in
+* Email confirmation
+* Analytics dashboard
+* Payment integration
+* Role-based UI rendering
+
+---
+
+# 🧠 What Makes This “Industry Grade”
+
+Not number of features.
+
+It’s:
+
+* Clean folder structure
+* Proper middleware
+* RBAC
+* Validation
+* Caching strategy
+* Clear error handling
+* Production-ready README
+
+---
+
+# 📌 Final Feature Checklist (Simple Version)
+
+Must Have:
+
+* Auth with roles
+* Event CRUD (Admin)
+* Booking system
+* Capacity logic
+* Protected routes
+* Filtering & pagination
+
+That’s enough to make it a strong portfolio project.
+
+---
+
+If you want next, I can give:
+
+* Database schema design
+* API route structure
+* Exact implementation roadmap (step by step)
+* Or complete auth flow breakdown
