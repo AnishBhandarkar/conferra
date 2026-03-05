@@ -14,10 +14,6 @@ const refreshTokenSchema = new Schema(
         expiresAt: {
             type: Date,
             required: true,
-        },
-        tokenFamily: { // For rotation safety and reuse detection
-            type: String,
-            required: true,
         }
     },
     { timestamps: true }
