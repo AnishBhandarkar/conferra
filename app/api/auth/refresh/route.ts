@@ -1,6 +1,7 @@
 import { REFRESH_TOKEN_COOKIE, REFRESH_TOKEN_EXPIRY_MS } from "@/lib/auth/constants";
 import { setAuthCookies } from "@/lib/auth/cookies";
 import { generateAccessToken, generateRefreshToken, hashToken } from "@/lib/auth/tokens";
+import { connectDB } from "@/lib/db";
 import { RefreshToken } from "@/models/RefreshToken";
 import { User } from "@/models/User";
 import { cookies } from "next/headers";
@@ -8,6 +9,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(): Promise<NextResponse> {
     try {
+        await connectDB();
+        
         const cookieStore = await cookies();
         const refreshToken = cookieStore.get(REFRESH_TOKEN_COOKIE)?.value;
 

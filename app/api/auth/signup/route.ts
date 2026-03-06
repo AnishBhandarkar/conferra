@@ -5,9 +5,12 @@ import { generateAccessToken, generateRefreshToken, hashToken } from "@/lib/auth
 import { RefreshToken } from "@/models/RefreshToken";
 import { REFRESH_TOKEN_EXPIRY_MS } from "@/lib/auth/constants";
 import { setAuthCookies } from "@/lib/auth/cookies";
+import { connectDB } from "@/lib/db";
 
 export async function POST(request: Request): Promise<NextResponse> {
     try {
+        await connectDB();
+        
         const { email, password, ...rest } = await request.json();
 
         if (!email || !password) {

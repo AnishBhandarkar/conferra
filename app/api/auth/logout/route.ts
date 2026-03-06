@@ -4,9 +4,12 @@ import { RefreshToken } from "@/models/RefreshToken";
 import { REFRESH_TOKEN_COOKIE } from "@/lib/auth/constants";
 import { hashToken } from "@/lib/auth/tokens";
 import { clearAuthCookies } from "@/lib/auth/cookies";
+import { connectDB } from "@/lib/db";
 
 export async function POST(): Promise<NextResponse> {
     try {
+        await connectDB();
+        
         const cookieStore = await cookies();
         const refreshToken = cookieStore.get(REFRESH_TOKEN_COOKIE)?.value;
 

@@ -2,12 +2,15 @@ import { REFRESH_TOKEN_EXPIRY_MS } from "@/lib/auth/constants";
 import { setAuthCookies } from "@/lib/auth/cookies";
 import { comparePassword } from "@/lib/auth/password";
 import { generateAccessToken, generateRefreshToken, hashToken } from "@/lib/auth/tokens";
+import { connectDB } from "@/lib/db";
 import { RefreshToken } from "@/models/RefreshToken";
 import { User } from "@/models/User";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request): Promise<NextResponse> {
     try {
+        await connectDB();
+
         const { email, password } = await request.json();
 
         if (!email || !password) {

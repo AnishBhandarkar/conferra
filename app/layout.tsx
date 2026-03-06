@@ -1,7 +1,8 @@
 
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { Toaster } from "sonner";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );
