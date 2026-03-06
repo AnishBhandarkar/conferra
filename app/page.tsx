@@ -1,7 +1,8 @@
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1 className="text-3xl font-bold">Conferra</h1>
-    </main>
+    <section>
+      <h1>Welcome to Conferra</h1>
+      <p>Discover and attend the best tech events.</p>
+    </section>
   );
 }
