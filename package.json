@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:events": "tsx scripts/seedEvents.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.3",
     "next": "16.1.6",
@@ -28,6 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
