@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export default function LoginForm() {
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const redirect = searchParams.get("redirect") || "/";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -42,7 +45,7 @@ export default function LoginForm() {
 
             toast.success("Login successful");
 
-            router.push("/");
+            router.replace(redirect);
             router.refresh();
 
         } catch {

@@ -1,5 +1,6 @@
 import LoginForm from "../components/auth/LoginForm";
 import Link from "next/link";
+import LoginPageToast from "../components/auth/LoginPageToast";
 
 export default function LoginPage() {
     return (
@@ -18,6 +19,7 @@ export default function LoginPage() {
                 </div>
 
                 <LoginForm />
+                <LoginPageToast />
 
                 <p className="text-sm text-center text-foreground/60">
                     Dont have an account?{" "}
