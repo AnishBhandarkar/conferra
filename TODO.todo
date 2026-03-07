@@ -1,0 +1,20 @@
+1. Event-Detail Page.
+- Clicking on event shows Event detail page.
+- It should have register btn (nly logedin can register) So handle that.
+(No need to implement Register api yet)
+
+
+2. Events page.
+- Search for Events
+- Pagination
+- Search by tag, mode etc [Filter option]
+
+3. Create Event page.
+(Upload image. Use cloudinary)
+
+4. Register event.
+
+5. Profile
+- My registered Events
+
+- My created events
