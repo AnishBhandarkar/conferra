@@ -64,28 +64,17 @@ const eventSchema = new Schema<IEvent>(
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
-            index: true,
+            index: true
         },
 
         tags: {
             type: [String],
-            default: [],
-            index: true,
+            default: []
         },
 
         agenda: {
             type: [String],
             default: [],
-        },
-
-        paid: {
-            type: Boolean,
-            default: false,
-        },
-
-        price: {
-            type: Number,
-            min: 0,
         }
     },
     {

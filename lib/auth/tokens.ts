@@ -1,4 +1,4 @@
-import { TokenUser } from "@/types/auth";
+import { AccessTokenPayload, TokenUser } from "@/types/auth";
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_BYTES } from "./constants";
 import crypto from "crypto";
@@ -23,3 +23,18 @@ export const generateRefreshToken = (): string => {
 export const hashToken = (token: string): string => {
     return crypto.createHash('sha256').update(token).digest('hex');
 };
+
+export function verifyAccessToken(token: string): AccessTokenPayload {
+    try {
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_ACCESS_SECRET!
+        ) as AccessTokenPayload;
+
+        return decoded;
+
+    } catch (error) {
+        console.error(error);
+        throw new Error("Invalid or expired access token");
+    }
+}

@@ -10,6 +10,7 @@ async function seedEvents() {
 
         console.log("DB connected");
 
+        // NOTE: This will clear existing DB records.
         // await Event.deleteMany();
 
         const events = [
@@ -24,11 +25,9 @@ async function seedEvents() {
                 mode: "OFFLINE",
                 capacity: 120,
                 attendeesCount: 0,
-                organizer: "65b000000000000000000001",
+                organizer: "69ac389a00b89ea5f2d9a133",
                 tags: ["react", "frontend"],
                 agenda: ["Intro", "React 19 Features", "Networking"],
-                paid: false,
-                price: 0
             },
             {
                 title: "GraphQL India Conference",
@@ -41,11 +40,9 @@ async function seedEvents() {
                 mode: "OFFLINE",
                 capacity: 300,
                 attendeesCount: 0,
-                organizer: "65b000000000000000000001",
+                organizer: "69ac389a00b89ea5f2d9a133",
                 tags: ["graphql", "backend"],
                 agenda: ["GraphQL Basics", "Apollo Server", "Scaling APIs"],
-                paid: true,
-                price: 999
             },
             {
                 title: "Next.js Global Summit",
@@ -58,11 +55,9 @@ async function seedEvents() {
                 mode: "ONLINE",
                 capacity: 1000,
                 attendeesCount: 0,
-                organizer: "65b000000000000000000001",
+                organizer: "69ac389a00b89ea5f2d9a133",
                 tags: ["nextjs", "react"],
                 agenda: ["Server Components", "App Router", "Scaling Next Apps"],
-                paid: false,
-                price: 0
             }
         ];
 

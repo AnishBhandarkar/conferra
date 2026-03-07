@@ -14,8 +14,6 @@ export interface IEvent extends Document {
     organizer: Types.ObjectId;
     tags: string[];
     agenda: string[];
-    paid: boolean;
-    price?: number;
     createdAt: Date;
     updatedAt: Date;
 };

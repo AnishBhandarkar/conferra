@@ -1,6 +1,7 @@
 import RegisterButton from "@/app/components/events/RegisterButton";
 import { connectDB } from "@/lib/db";
 import { Event } from "@/models/Event";
+import { User } from "@/models/User";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -15,6 +16,8 @@ export default async function EventDetailPage({ params }: Props) {
     await connectDB();
 
     const event = await Event.findById(eventId).lean();
+
+    const organizer = await User.findById(event.organizer).select("-password");
 
     if (!event) {
         notFound();
@@ -63,7 +66,7 @@ export default async function EventDetailPage({ params }: Props) {
             </div>
 
             {/* Event Meta */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border border-foreground/10 rounded-lg p-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 border border-foreground/10 rounded-lg p-3">
 
                 <div>
                     <p className="text-sm text-foreground/60">Capacity</p>
@@ -73,13 +76,6 @@ export default async function EventDetailPage({ params }: Props) {
                 <div>
                     <p className="text-sm text-foreground/60">Registered</p>
                     <p className="font-medium">{event.attendeesCount}</p>
-                </div>
-
-                <div>
-                    <p className="text-sm text-foreground/60">Price</p>
-                    <p className="font-medium">
-                        {event.paid ? `₹${event.price}` : "Free"}
-                    </p>
                 </div>
 
                 <div>
@@ -139,22 +135,32 @@ export default async function EventDetailPage({ params }: Props) {
 
             </section>
 
-            {/* Organizer Placeholder */}
+            {/* Organizer */}
             <section className="space-y-3">
 
                 <h2 className="text-xl font-semibold">
                     Organizer
                 </h2>
 
-                <div className="border border-foreground/10 rounded-lg p-4">
+                <div className="border border-foreground/10 rounded-lg p-5 flex items-center gap-4">
 
-                    <p className="font-medium">
-                        Tech Community
-                    </p>
+                    {/* Avatar */}
+                    <div className="h-12 w-12 rounded-full bg-foreground/10 flex items-center justify-center text-sm font-semibold">
+                        {organizer?.name?.charAt(0)}
+                    </div>
 
-                    <p className="text-sm text-foreground/70">
-                        Organizer information will appear here.
-                    </p>
+                    {/* Organizer Info */}
+                    <div>
+
+                        <p className="font-medium">
+                            {organizer?.name}
+                        </p>
+
+                        <p className="text-sm text-foreground/70">
+                            {organizer?.email}
+                        </p>
+
+                    </div>
 
                 </div>
 
