@@ -3,6 +3,7 @@
 - It should have register btn (nly logedin can register) So handle that.
 (No need to implement Register api yet)
 
+---
 
 2. Events page.
 - Search for Events
