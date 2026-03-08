@@ -1,5 +1,4 @@
 export const BCRYPT_SALT_ROUNDS = 12;
-
 export const REFRESH_TOKEN_BYTES = 64;
 
 export const ACCESS_TOKEN_EXPIRES_IN = "15m";
