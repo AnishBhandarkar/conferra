@@ -1,14 +1,6 @@
 import { Schema, models, model } from "mongoose";
 
 /**
- * User Roles: USER and ADMIN
- */
-export enum UserRole {
-    USER = "USER",
-    ADMIN = "ADMIN",
-}
-
-/**
  * User Schema Definition
  */
 const UserSchema = new Schema(
@@ -30,13 +22,7 @@ const UserSchema = new Schema(
         password: {
             type: String,
             required: true,
-        },
-
-        role: {
-            type: String,
-            enum: Object.values(UserRole),
-            default: UserRole.USER,
-        },
+        }
     },
     {
         timestamps: true,

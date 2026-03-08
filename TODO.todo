@@ -1,9 +1,1 @@
 1. Once event enddate over, automaticaaly clear event and associated registration.
-
-git commit -m "chore(logging): introduce structured logging with pino
-
-- Add centralized logger utility
-- Configure development pretty logging with pino-pretty
-- Enable structured JSON logs for production
-- Replace console logs with logger usage
-"

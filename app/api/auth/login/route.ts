@@ -73,8 +73,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 user: {
                     userId: user._id,
                     email: user.email,
-                    name: user.name,
-                    role: user.role
+                    name: user.name
                 }
             },
             { status: 200 }
