@@ -1,44 +1,260 @@
-# conferra
-Conferra is a fullstack event booking platform built with Next.js (App Router), TypeScript, and MongoDB. Users can browse tech events, register, and book seats with secure JWT authentication and role-based access control. Designed with production-grade architecture, validation, caching, and testing best practices.
+# Conferra
 
+Conferra is a full-stack **event discovery and registration platform** built with **Next.js (App Router), TypeScript, and MongoDB**.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Users can discover tech events, register for them, and organizers can create and manage events with rich details and banner images.
 
-## Getting Started
+The project is designed with **production-grade backend architecture**, including secure authentication, validation, structured logging, monitoring, and automated maintenance jobs.
 
-First, run the development server:
+This project focuses not only on features but also on **engineering practices used in real production systems**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+# Features
+
+## Authentication
+
+* Secure **JWT authentication**
+* Access token + refresh token strategy
+* Refresh token rotation
+* HttpOnly cookie based authentication
+
+---
+
+## Event Discovery
+
+Users can:
+
+* Browse tech events
+* View detailed event pages
+* Discover **featured events**
+* Search and filter events
+
+Each event includes:
+
+* title
+* description
+* venue
+* location
+* start and end time
+* tags
+* agenda
+* organizer information
+
+---
+
+## Event Creation
+
+Authenticated users can create events including:
+
+* event title and description
+* event banner image
+* location and venue
+* agenda and tags
+* capacity
+
+Event banner images are uploaded to **Cloudinary**.
+
+---
+
+## Event Registration
+
+Users can register for events with:
+
+* capacity validation
+* duplicate registration prevention
+* attendee count tracking
+* automatic login redirect for unauthenticated users
+
+---
+
+## User Profile
+
+Each user has a profile dashboard displaying:
+
+* events they created
+* events they registered for
+
+---
+
+## Automated Maintenance
+
+A scheduled background job automatically:
+
+* deletes expired events
+* removes associated registrations
+* deletes event banner images from Cloudinary
+
+This prevents stale data and unused storage.
+
+---
+
+## Observability
+
+The platform includes observability features used in production systems.
+
+### Logging
+
+Structured logging using **Pino**.
+
+Logs capture:
+
+* event creation
+* registrations
+* authentication events
+* system errors
+
+### Monitoring
+
+Error monitoring using **Sentry**.
+
+Sentry captures:
+
+* server errors
+* API failures
+* client crashes
+* stack traces for debugging production issues
+
+---
+
+# Tech Stack
+
+## Frontend
+
+* Next.js (App Router)
+* React Server Components
+* TypeScript
+* Tailwind CSS
+
+## Backend
+
+* Next.js Route Handlers
+* MongoDB
+* Mongoose ODM
+
+## Authentication
+
+* JWT
+* Refresh token rotation
+* HttpOnly cookies
+
+## Storage
+
+* Cloudinary (image hosting)
+
+## Observability
+
+* Pino logging
+* Sentry monitoring
+
+## Background Jobs
+
+* node-cron for scheduled cleanup tasks
+
+---
+
+# Getting Started
+
+Clone the repository.
+
+```
+git clone https://github.com/your-username/conferra.git
+cd conferra
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install dependencies.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the development server.
 
-## Learn More
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+# Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `.env.local` file.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Example configuration:
+
+```
+MONGODB_URI=
+
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+SENTRY_DSN=
+SENTRY_ENABLED=false
+NEXT_PUBLIC_SENTRY_ENABLED=false
+```
+
+---
+
+# Architecture Decisions (ADR)
+
+Important architecture decisions are documented using **Architecture Decision Records**.
+
+See:
+
+```
+docs/adr
+```
+
+Examples include:
+
+* JWT authentication strategy
+* refresh token storage design
+* event registration data model
+* Cloudinary image storage approach
+* background job cleanup strategy
+
+Documenting these decisions makes the architecture easier to understand and evolve.
+
+---
+
+# Roadmap
+
+Planned improvements are documented in:
+
+```
+docs/ROADMAP.md
+```
 
 
-## Architecture Decisions
-See `/docs/adr` for documented architecture decisions.
+---
+
+# Engineering Focus
+
+This project demonstrates practices used in production systems:
+
+* secure authentication patterns
+* background job scheduling
+* structured logging
+* error monitoring
+* API validation and sanitization
+* scalable database modeling
+
+---
+
+# License
+
+This project is built for **learning and portfolio purposes**.
+
+```
+
+---
