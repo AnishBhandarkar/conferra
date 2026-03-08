@@ -75,6 +75,11 @@ const eventSchema = new Schema<IEvent>(
         agenda: {
             type: [String],
             default: [],
+        },
+
+        cloudinaryPublicId: {
+            type: String,
+            required: true
         }
     },
     {

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { startJobs } from "./jobs/startJobs";
 
 /**
  * MongoDB connection URI from environment variables.
@@ -48,6 +49,8 @@ if (!globalWithMongoose.mongoose) {
  * Connect to MongoDB using singleton pattern.
  */
 export async function connectDB() {
+    startJobs();
+    
     // If already connected, reuse existing connection
     if (globalWithMongoose.mongoose!.conn) {
         return globalWithMongoose.mongoose!.conn;

@@ -16,4 +16,5 @@ export interface IEvent extends Document {
     agenda: string[];
     createdAt: Date;
     updatedAt: Date;
+    cloudinaryPublicId: string
 };

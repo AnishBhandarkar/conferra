@@ -1,6 +1,11 @@
 import cloudinary from "@/lib/cloudinary";
 
-export async function uploadImage(file: File): Promise<string> {
+interface CloudinaryImgResult {
+    imageUrl: string;
+    publicId: string;
+}
+
+export async function uploadImage(file: File): Promise<CloudinaryImgResult> {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
@@ -14,5 +19,9 @@ export async function uploadImage(file: File): Promise<string> {
         resource_type: "image"
     });
 
-    return result.secure_url;
+    return {
+        imageUrl: result.secure_url,
+        publicId: result.public_id
+    };
+
 }

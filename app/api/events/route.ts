@@ -59,7 +59,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const imageUrl = await uploadImage(file);
+        const { imageUrl } = await uploadImage(file);
 
         // Validate and sanitize rest of form data
         const rawData = Object.fromEntries(formData.entries());
