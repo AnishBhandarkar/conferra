@@ -1,19 +1,67 @@
 "use client";
 
+import { IEvent } from "@/types/event";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
-export default function RegisterButton() {
+interface Props {
+    event: IEvent,
+    isLoggedIn: boolean
+    isRegistered: boolean
+}
 
-    const handleRegister = () => {
-        toast("Registration feature coming soon!");
+export default function RegisterButton({ event, isLoggedIn, isRegistered }: Props) {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
+    if (event.attendeesCount >= event.capacity) {
+        toast.message("Event full");
+    }
+
+    const handleRegister = async () => {
+        if (!isLoggedIn) {
+            router.replace(
+                `/login?redirect=/events/${event._id.toString()}&reason=auth-required`
+            );
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const res = await fetch(`/api/events/${event._id.toString()}/register`, { method: "POST" });
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message || "Registration failed");
+                return;
+            }
+
+            toast.success("Successfully registered!");
+
+            // refresh page so attendeesCount updates
+            router.refresh();
+
+        } catch {
+            toast.error("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <button
+            disabled={event.attendeesCount >= event.capacity || isRegistered}
             onClick={handleRegister}
-            className="bg-foreground text-background px-6 py-3 rounded-md font-medium hover:opacity-90 transition"
+            className="cursor-pointer bg-foreground text-background px-6 py-3 rounded-md font-medium transition 
+             hover:opacity-90 
+             disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
         >
-            Register
+            {loading ? "Registering" :
+                isRegistered ? "Registered" :
+                    event.attendeesCount >= event.capacity ? "Sold Out" :
+                        "Register Now"
+            }
         </button>
     );
 }

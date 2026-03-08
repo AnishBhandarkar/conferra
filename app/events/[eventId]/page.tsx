@@ -1,6 +1,8 @@
 import RegisterButton from "@/app/components/events/RegisterButton";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { connectDB } from "@/lib/db";
 import { Event } from "@/models/Event";
+import { Registration } from "@/models/Registration";
 import { User } from "@/models/User";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -15,6 +17,8 @@ export default async function EventDetailPage({ params }: Props) {
 
     await connectDB();
 
+    const user = await getCurrentUser();
+
     const event = await Event.findById(eventId).lean();
 
     const organizer = await User.findById(event.organizer).select("-password");
@@ -22,6 +26,13 @@ export default async function EventDetailPage({ params }: Props) {
     if (!event) {
         notFound();
     }
+
+    const registration = await Registration.findOne({
+        event: eventId,
+        user: user?.userId
+    });
+
+    const isRegistered = !!registration;
 
     const date = new Date(event.startDate);
 
@@ -61,7 +72,11 @@ export default async function EventDetailPage({ params }: Props) {
 
                 </div>
 
-                <RegisterButton />
+                <RegisterButton
+                    event={JSON.parse(JSON.stringify(event))}
+                    isLoggedIn={!!user}
+                    isRegistered={isRegistered}
+                />
 
             </div>
 

@@ -24,7 +24,7 @@ async function seedEvents() {
                 endDate: new Date("2026-04-12T21:00:00"),
                 mode: "OFFLINE",
                 capacity: 120,
-                attendeesCount: 0,
+                attendeesCount: 120,
                 organizer: "69ac389a00b89ea5f2d9a133",
                 tags: ["react", "frontend"],
                 agenda: ["Intro", "React 19 Features", "Networking"],
