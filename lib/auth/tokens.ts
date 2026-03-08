@@ -33,8 +33,7 @@ export function verifyAccessToken(token: string): AccessTokenPayload {
 
         return decoded;
 
-    } catch (error) {
-        console.error(error);
+    } catch {
         throw new Error("Invalid or expired access token");
     }
 }
