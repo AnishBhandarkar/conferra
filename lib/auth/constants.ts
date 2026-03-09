@@ -6,6 +6,7 @@ export const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in mil
 
 export const ACCESS_TOKEN_COOKIE = "accessToken";
 export const REFRESH_TOKEN_COOKIE = "refreshToken";
+export const CSRF_TOKEN_COOKIE = "csrfToken";
 
 export const ACCESS_TOKEN_MAX_AGE = 15 * 60; // 15 minutes
 export const REFRESH_TOKEN_MAX_AGE = 7 * 24 * 60 * 60; // 7 days

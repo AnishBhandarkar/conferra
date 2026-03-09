@@ -3,6 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { getCSRFCookieInClient } from "@/lib/auth/cookies";
 
 interface EventFormState {
     title: string;
@@ -121,9 +122,18 @@ export default function EventForm() {
 
             if (image) formData.append("image", image);
 
+            const csrfToken = getCSRFCookieInClient(document.cookie);
+
+            if (!csrfToken) {
+                throw new Error("Missing CSRF token");
+            }
+
             const res = await fetch("/api/events", {
                 method: "POST",
-                body: formData
+                body: formData,
+                headers: {
+                    "x-csrf-token": csrfToken
+                }
             });
 
             const data = await res.json();

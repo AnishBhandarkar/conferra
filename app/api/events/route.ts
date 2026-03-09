@@ -7,6 +7,7 @@ import { verifyAccessToken } from "@/lib/auth/tokens";
 import { cookies } from "next/headers";
 import { uploadImage } from "@/lib/uploads/uploadImage";
 import { logger } from "@/lib/logger";
+import { validateCSRF } from "@/lib/security/csrf";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -28,6 +29,17 @@ export async function POST(request: Request) {
         }
 
         const user = verifyAccessToken(token);
+
+        // Validate csrf token (double-submit CSRF protection)
+        if (!(await validateCSRF(request))) {
+            return Response.json(
+                { message: "Invalid CSRF token" },
+                { status: 403 }
+            );
+        }
+
+        logger.info({ requestId }, 'CSRF Token validated');
+
 
         logger.info({ requestId, userId: user.userId }, 'Event creation started');
 
@@ -59,7 +71,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const { imageUrl } = await uploadImage(file);
+        const { imageUrl, publicId } = await uploadImage(file);
 
         // Validate and sanitize rest of form data
         const rawData = Object.fromEntries(formData.entries());
@@ -87,6 +99,7 @@ export async function POST(request: Request) {
         const event = await Event.create({
             ...cleanData,
             coverImage: imageUrl,
+            cloudinaryPublicId: publicId,
             organizer: user.userId,
             attendeesCount: 0
         });

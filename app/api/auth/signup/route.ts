@@ -4,9 +4,10 @@ import { hashPassword } from "@/lib/auth/password";
 import { generateAccessToken, generateRefreshToken, hashToken } from "@/lib/auth/tokens";
 import { RefreshToken } from "@/models/RefreshToken";
 import { REFRESH_TOKEN_EXPIRY_MS } from "@/lib/auth/constants";
-import { setAuthCookies } from "@/lib/auth/cookies";
+import { setAuthCookies, setCSRFTkenCookies } from "@/lib/auth/cookies";
 import { connectDB } from "@/lib/db";
 import { logger } from "@/lib/logger";
+import { generateCSRFToken } from "@/lib/security/csrf";
 
 export async function POST(request: Request): Promise<NextResponse> {
     const requestId = crypto.randomUUID();
@@ -68,6 +69,10 @@ export async function POST(request: Request): Promise<NextResponse> {
         );
 
         setAuthCookies(response, accessToken, refreshToken);
+
+        // Add CSRF tokens
+        const csrfToken = generateCSRFToken();
+        setCSRFTkenCookies(response, csrfToken);
 
         logger.info({ requestId, userId: user._id }, 'Signup completed');
 

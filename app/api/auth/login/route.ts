@@ -1,5 +1,5 @@
 import { REFRESH_TOKEN_EXPIRY_MS } from "@/lib/auth/constants";
-import { setAuthCookies } from "@/lib/auth/cookies";
+import { setAuthCookies, setCSRFTkenCookies } from "@/lib/auth/cookies";
 import { comparePassword } from "@/lib/auth/password";
 import { generateAccessToken, generateRefreshToken, hashToken } from "@/lib/auth/tokens";
 import { connectDB } from "@/lib/db";
@@ -7,6 +7,7 @@ import { RefreshToken } from "@/models/RefreshToken";
 import { User } from "@/models/User";
 import { NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
+import { generateCSRFToken } from "@/lib/security/csrf";
 
 export async function POST(request: Request): Promise<NextResponse> {
     // Start with request context for correlation
@@ -79,7 +80,12 @@ export async function POST(request: Request): Promise<NextResponse> {
             { status: 200 }
         );
 
+        // Add access and refresh tokens
         setAuthCookies(response, accessToken, refreshToken);
+
+        // Add CSRF tokens
+        const csrfToken = generateCSRFToken();
+        setCSRFTkenCookies(response, csrfToken);
 
         childLogger.info({
             userId: user._id,

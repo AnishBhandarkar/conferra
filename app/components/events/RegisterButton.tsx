@@ -1,5 +1,6 @@
 "use client";
 
+import { getCSRFCookieInClient } from "@/lib/auth/cookies";
 import { IEvent } from "@/types/event";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -29,7 +30,19 @@ export default function RegisterButton({ event, isLoggedIn, isRegistered }: Prop
 
         try {
             setLoading(true);
-            const res = await fetch(`/api/events/${event._id.toString()}/register`, { method: "POST" });
+            const csrfToken = getCSRFCookieInClient(document.cookie);
+
+            if (!csrfToken) {
+                throw new Error("Missing CSRF token");
+            }
+
+            const res = await fetch(`/api/events/${event._id.toString()}/register`, {
+                method: "POST",
+                headers: {
+                    "x-csrf-token": csrfToken
+                }
+            });
+
             const data = await res.json();
 
             if (!res.ok) {

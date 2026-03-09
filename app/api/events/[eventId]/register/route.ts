@@ -3,6 +3,7 @@ import { Event } from "@/models/Event";
 import { Registration } from "@/models/Registration";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { logger } from "@/lib/logger";
+import { validateCSRF } from "@/lib/security/csrf";
 
 export async function POST(request: Request, context: { params: Promise<{ eventId: string }> }) {
     const requestId = crypto.randomUUID();
@@ -13,6 +14,16 @@ export async function POST(request: Request, context: { params: Promise<{ eventI
         const { eventId } = await context.params;
 
         const user = await getCurrentUser();
+
+        // Validate csrf token (double-submit CSRF protection)
+        if (!(await validateCSRF(request))) {
+            return Response.json(
+                { message: "Invalid CSRF token" },
+                { status: 403 }
+            );
+        }
+
+        logger.info({ requestId }, 'CSRF Token validated');
 
         if (!user) {
             logger.warn({ requestId }, 'Unauthorized registration attempt');
